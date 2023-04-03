@@ -8,7 +8,7 @@ class MovieInitial extends MovieState {}
 class MovieDetailsLoading extends MovieState {}
 
 class MovieDetailsLoaded extends MovieState {
-  final Movie movieDetails;
+  final Movie? movieDetails;
 
   MovieDetailsLoaded(this.movieDetails);
 }

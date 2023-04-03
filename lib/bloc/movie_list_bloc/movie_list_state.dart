@@ -11,7 +11,7 @@ class MovieListLoading extends MovieListState {
 }
 
 class MovieListLoaded extends MovieListState  {
-  final List<Movie> movieList;
+  final List<Movie?> movieList;
 
   MovieListLoaded(this.movieList);
 }

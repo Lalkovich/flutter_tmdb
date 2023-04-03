@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_tmdb/data/models/movie.dart';
-import 'package:flutter_tmdb/data/repositories/movie_repository.dart';
+import 'package:flutter_tmdb/data/network_repositories/movie_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_tmdb/main.dart';
 

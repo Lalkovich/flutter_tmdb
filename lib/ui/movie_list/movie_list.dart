@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tmdb/bloc/movie_list_bloc/movie_list_bloc.dart';
+import 'package:flutter_tmdb/data/models/movie.dart';
 import 'package:flutter_tmdb/main.dart';
 import 'package:flutter_tmdb/ui/movie_list/movie_tile.dart';
 
@@ -27,13 +28,17 @@ class _MovieListState extends State<MovieListScreen> {
     super.dispose();
   }
 
+  Future<void> _refresh() async {
+    _movieListBloc.add(LoadMovieList());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TMDB'),
       ),
-      body:BlocBuilder<MovieListBloc,MovieListState>(
+      body:RefreshIndicator(onRefresh: _refresh,child:BlocBuilder<MovieListBloc,MovieListState>(
         bloc: _movieListBloc,
         builder: (context,state){
           if(state is MovieListLoading){
@@ -46,13 +51,13 @@ class _MovieListState extends State<MovieListScreen> {
                 itemCount: movies.length,
                 itemBuilder: (BuildContext context, int index) {
                   final movie = movies[index];
-                  return MovieTile(movie: movie);
+                  return MovieTile(movie: movie as Movie);
                 });
           }else if(state is MovieListInitial){
             return const Center(
               child: Text('Movie List Initial'),
             );
-        }else if(state is MovieListError){
+          }else if(state is MovieListError){
             return const Center(
               child: Text('Failed to fetch movies'),
             );
@@ -62,7 +67,7 @@ class _MovieListState extends State<MovieListScreen> {
             );
           }
         },
-      )
+      ))
     );
   }
 }

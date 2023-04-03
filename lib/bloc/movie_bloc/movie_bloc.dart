@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_tmdb/data/models/movie.dart';
-import 'package:flutter_tmdb/data/repositories/movie_repository.dart';
+import 'package:flutter_tmdb/data/network_repositories/movie_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_tmdb/main.dart';
@@ -21,7 +21,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     emit(MovieDetailsLoading());
     try{
       final movie = await _movieRepository.getMovieDetails(event.movieId);
-      emit(MovieDetailsLoaded(movie));
+      emit(MovieDetailsLoaded(movie!));
     }catch(error){
       emit(MovieError(error.toString()));
     }

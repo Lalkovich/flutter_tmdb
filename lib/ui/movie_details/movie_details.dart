@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tmdb/bloc/movie_bloc/movie_bloc.dart';
@@ -30,19 +32,21 @@ class MovieDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.network(
-                    'https://image.tmdb.org/t/p/w500${movieDetails.posterPath}',
-                    width: double.infinity,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  ),
+                  movieDetails?.imageData != null
+                      ? Image.memory(movieDetails?.imageData as Uint8List)
+                      : Image.network(
+                          'https://image.tmdb.org/t/p/original${movieDetails?.posterPath}',
+                          width: double.infinity,
+                          height: 300,
+                          fit: BoxFit.cover,
+                        ),
                   const SizedBox(height: 16),
                   Text(
-                    movieDetails.originalTitle,
+                    movieDetails?.originalTitle ?? '',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(height: 8),
-                  Text(movieDetails.overview),
+                  Text(movieDetails?.overview ?? ''),
                 ],
               ),
             );
